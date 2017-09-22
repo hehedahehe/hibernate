@@ -1,3 +1,5 @@
+package buss.hb.Hibernate;
+
 import com.hb.entity.Hobby;
 import com.hb.entity.Students;
 import com.hb.entity.Subject;

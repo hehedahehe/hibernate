@@ -1,4 +1,4 @@
-package com.hb.entity;
+package com.hb.entity.many2many;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -64,17 +64,12 @@ public class MUser {
 //    }
 
     /**
-     * 级联属性，在删除用户时，并不希望删除role的实体数据，而只希望删除
-     * 掉其关联关系
+     * 1. cascade ： 级联属性，在删除用户时，并不希望删除role的实体数据，而只希望删除掉其关联关系。
+     * 2. fetch ：希望在获取用户信息的时候，同时获取其角色信息。
      * @return
      */
-//    @ManyToMany(cascade = CascadeType.ALL)
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(
-        name="USER_ROLE",
-        joinColumns = @JoinColumn(name = "USER_ID"),
-        inverseJoinColumns = @JoinColumn(name ="ROLE_ID")
-    )
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    @JoinTable(name="USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"),inverseJoinColumns = @JoinColumn(name ="ROLE_ID"))
     public Set<MRole> getRoles() {
         return roles;
     }

@@ -1,7 +1,8 @@
-package buss.hb;
+package buss.hb.JPA.many2many;
 
-import com.hb.entity.MRole;
-import com.hb.entity.MUser;
+import buss.hb.BaseTest;
+import com.hb.entity.many2many.MRole;
+import com.hb.entity.many2many.MUser;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -47,7 +48,6 @@ public class TestHb extends BaseTest {
         tx.begin();
 
         MRole role2 = new MRole("教职工");
-
 
         Set<MRole> roles = new HashSet<>();
         roles.add(role2);
