@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+<context:property-placeholder ignore-unresolvable="true" local-override="true"
+                                  location="classpath*:application-buss-test.properties"/>
+    <!-- 数据源配置, 使用DBCP数据库连接池 -->
+    <bean id="bussDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <!-- Connection Info -->
+        <property name="driverClassName" value="${buss.jdbc.driver}"/>
+        <property name="url" value="${buss.jdbc.url}"/>
+        <property name="username" value="${buss.jdbc.username}"/>
+        <property name="password" value="${buss.jdbc.password}"/>
+
+        <!-- Connection Pooling Info -->
+        <property name="initialSize" value="${buss.dbcp.initialSize}"/>
+        <!--<property name="maxActive" value="${buss.dbcp.maxActive}"/>-->
+        <property name="maxIdle" value="${buss.dbcp.maxIdle}"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <!-- 连接Idle一个小时后超时 -->
+        <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+        <property name="minEvictableIdleTimeMillis" value="3600000"/>
+    </bean>
+
+    <!-- Jpa Entity Manager 配置 -->
+    <bean id="bussEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="bussDataSource"/>
+        <property name="jpaVendorAdapter" ref="bussHibernateJpaVendorAdapter"/>
+        <property name="packagesToScan" value="com.hb.entity"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">${buss.Hibernate.dialect}</prop>
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!--<prop key="hibernate.use_sql_comments">true</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <bean id="bussHibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+
+    <!-- Spring Data Jpa配置 -->
+    <jpa:repositories base-package="com.hb.entity" transaction-manager-ref="bussTransactionManager"
+                      entity-manager-factory-ref="bussEntityManagerFactory"/>
+
+    <!-- Jpa 事务配置 -->
+    <bean id="bussTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="bussEntityManagerFactory"/>
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="bussTransactionManager" proxy-target-class="true"/>
+
+
+</beans>

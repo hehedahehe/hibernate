@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hb.entity.Students" table="TB_STUDENTS">
+        <id name="sid" type="int">
+            <column name="sid"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="sname" type="java.lang.String">
+            <column name="sname"/>
+        </property>
+        <property name="gender" type="java.lang.String">
+            <column name="gender"/>
+        </property>
+        <property name="birthday" type="java.util.Date">
+            <column name="birthday"/>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address"/>
+        </property>
+
+        <!--学科-->
+        <set name="subjects" table="TB_SUBJECTS">
+            <key column="sid"/>
+            <composite-element class="com.hb.entity.Subject">
+                <parent name="students"/>
+                <property name="name"  type="string" column="name"  not-null="true"></property>
+                <property name="subjectDesc" type="string" column="subjectDesc" not-null="true"></property>
+            </composite-element>
+        </set>
+
+        <!--图片-->
+        <!--name属性对应get方法-->
+        <set name="idimgs" table="TB_IDIMGS">
+            <key column="sid"/>
+            <element type="string" column="IDIMG" not-null="true"/>
+        </set>
+
+        <!--兴趣-->
+        <!--映射map-->
+        <map name="hobbyMap" table="TB_HOBBY">
+            <key column="sid"/>
+            <map-key type="string" column="HOBBY_TYPE"/>
+            <composite-element class="com.hb.entity.Hobby">
+                <property name="name" type="string" column="HOBBY_NAME" not-null="true"></property>
+            </composite-element>
+        </map>
+    </class>
+</hibernate-mapping>
