@@ -1,4 +1,4 @@
-package buss.hb;
+package buss.hb.JPA;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,21 +26,10 @@ public class BaseTest extends AbstractJUnit4SpringContextTests {
     public EntityManager em;
     public EntityTransaction tx;
 
-
-    /**Hibernate**/
-    @Resource(name="sessionFactory")
-    public SessionFactory sessionFactory;
-    public Session session;
-    public Transaction txHb;
-
-
     @Before
     public void initResource(){
         em = bussEntityManagerFactory.createEntityManager();
         tx = em.getTransaction();
-
-        //session = sessionFactory.openSession();
-        //txHb = session.getTransaction();
     }
 
 

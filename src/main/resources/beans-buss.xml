@@ -7,7 +7,7 @@
 
 
 <context:property-placeholder ignore-unresolvable="true" local-override="true"
-                                  location="classpath*:application-buss-test.properties"/>
+                                  location="classpath*:application-buss.properties"/>
     <!-- 数据源配置, 使用DBCP数据库连接池 -->
     <bean id="bussDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <!-- Connection Info -->
@@ -76,6 +76,7 @@
         <property name="packagesToScan" value="com.hb.entity" />
     </bean>
 
+
     <!--事物配置-->
     <!--spring4+hibernate4,使用hibernate的api的时候需要配置事务的,如果不配置事务会导致获取当前session抛出异常.-->
     <bean id="hbTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -89,5 +90,8 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="bussDataSource" />
     </bean>
+
+    <context:component-scan base-package="com.hb.dao,com.hb.service" />
+
 
 </beans>

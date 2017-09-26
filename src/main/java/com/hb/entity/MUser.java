@@ -1,4 +1,4 @@
-package com.hb.entity.many2many;
+package com.hb.entity;
 
 import javax.persistence.*;
 import java.util.Set;

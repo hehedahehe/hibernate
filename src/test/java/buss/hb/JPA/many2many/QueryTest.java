@@ -1,8 +1,8 @@
 package buss.hb.JPA.many2many;
 
-import buss.hb.BaseTest;
-import com.hb.entity.many2many.MRole;
-import com.hb.entity.many2many.MUser;
+import buss.hb.JPA.BaseTest;
+import com.hb.entity.MRole;
+import com.hb.entity.MUser;
 import org.junit.Assert;
 import org.junit.Test;
 
