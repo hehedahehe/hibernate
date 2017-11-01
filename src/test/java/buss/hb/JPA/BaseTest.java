@@ -31,7 +31,4 @@ public class BaseTest extends AbstractJUnit4SpringContextTests {
         em = bussEntityManagerFactory.createEntityManager();
         tx = em.getTransaction();
     }
-
-
-
 }

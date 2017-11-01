@@ -90,4 +90,7 @@
         <property name="dataSource" ref="bussDataSource" />
     </bean>
 
+    <tx:annotation-driven transaction-manager="hbTransactionManager"/>
+
+
 </beans>
