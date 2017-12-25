@@ -1,5 +1,6 @@
 package com.hb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,6 +20,7 @@ public class Grade {
     private int score;
     private String description;
     private String userID;
+    private User user;
 
     private int version;
 
@@ -62,6 +64,20 @@ public class Grade {
     }
 
 
+    @OneToOne(fetch = FetchType.EAGER,mappedBy = "grade")
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
     @Version
     @Column(name = "grade_version")
     public int getVersion() {
@@ -80,5 +96,7 @@ public class Grade {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+
 
 }

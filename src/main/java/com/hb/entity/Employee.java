@@ -20,6 +20,13 @@ public class Employee {
     private String description;
     private Set<User>  users = new HashSet<>();
 
+    public Employee(){}
+
+    public Employee(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     @Id
     @GenericGenerator(name = "generator", strategy = "uuid.hex")
     @GeneratedValue(generator = "generator")
@@ -50,7 +57,7 @@ public class Employee {
         this.description = description;
     }
 
-       @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public Set<User> getUsers() {

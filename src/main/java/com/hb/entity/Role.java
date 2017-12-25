@@ -20,6 +20,11 @@ public class Role {
     private String description;
     private Set<User> users;
 
+    public Role(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
+
 
     @Id
     @GenericGenerator(name = "generator", strategy = "uuid.hex")

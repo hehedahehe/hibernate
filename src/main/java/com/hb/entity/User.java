@@ -62,10 +62,9 @@ public class User {
         this.description = description;
     }
 
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE,org.hibernate.annotations.CascadeType.DELETE})
     public Set<Role> getRoles() {
         return roles;
     }
